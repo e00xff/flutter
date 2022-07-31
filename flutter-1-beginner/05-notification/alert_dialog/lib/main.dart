@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MaterialApp(
@@ -16,39 +17,40 @@ class MyApp extends StatefulWidget {
 
 class _State extends State<MyApp> {
 
+  Future _showAlert(BuildContext context, String message) async {
+    return showDialog(
+      context: context, 
+      builder: (_) => AlertDialog(
+        title: Text(message),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context), 
+            child: const Text('Ok'),
+          ), 
+        ],
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      // 3. Drawer
       appBar: AppBar(
         title: const Text('App Name'),
-        backgroundColor: Colors.red,
       ),
-
-      drawer: Drawer(
-        child: Container(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            children: <Widget>[
-              Container(padding: const EdgeInsets.all(15), child: const Text('It is: Drawer')),
-              ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text('Close') )
-            ],
-          ),
-        ),
-      ),
-
       body:  Container(
           padding: const EdgeInsets.all(32.0),
           child: Center(
             child: Column(
-              children: const <Widget>[
-                 Text('Content')
+              children: <Widget>[
+
+                 const Text('content'), 
+                 ElevatedButton(onPressed: () => _showAlert(context, 'Do you like flutter, I  do.'), child: const Text('abc'))
+              
               ],
             ),
           )
       ),
-
     );
   }
   

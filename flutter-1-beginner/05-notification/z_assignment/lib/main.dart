@@ -16,39 +16,44 @@ class MyApp extends StatefulWidget {
 
 class _State extends State<MyApp> {
 
+  String _value = '';
+
+  void _showBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(milliseconds: 300)
+      ),
+    );
+  }
+
+  void _onChange(String value) {
+    setState(() {
+      _value = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      // 3. Drawer
       appBar: AppBar(
         title: const Text('App Name'),
-        backgroundColor: Colors.red,
       ),
-
-      drawer: Drawer(
-        child: Container(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            children: <Widget>[
-              Container(padding: const EdgeInsets.all(15), child: const Text('It is: Drawer')),
-              ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text('Close') )
-            ],
-          ),
-        ),
-      ),
-
       body:  Container(
           padding: const EdgeInsets.all(32.0),
           child: Center(
             child: Column(
-              children: const <Widget>[
-                 Text('Content')
+              children: <Widget>[
+                 const Text('Enter you name'),
+                 TextField(onChanged: _onChange,),
+                 ElevatedButton(
+                   onPressed: () => _showBar('Hello ${_value}'), 
+                   child: const Text('Click me')
+                )
               ],
             ),
           )
       ),
-
     );
   }
   
